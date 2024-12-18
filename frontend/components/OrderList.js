@@ -4,7 +4,7 @@ import { useGetOrdersQuery } from '../state/ordersApi';
 import { toggleSizeFilter } from '../state/ordersSlice';
 
 export default function OrderList() {
-  const { data: orders = [], isLoading, isError } = useGetOrdersQuery();
+  const { data: orders = [], } = useGetOrdersQuery();
   const filterSize = useSelector((state) => state.ordersState.filterSize);
   const dispatch = useDispatch();
 
@@ -12,8 +12,7 @@ export default function OrderList() {
     dispatch(toggleSizeFilter(size));
   };
 
-  if (isLoading) return <p>Loading orders...</p>;
-  if (isError) return <p>Error loading orders!</p>;
+ 
 
   const filteredOrders =
     filterSize === 'All' ? orders : orders.filter((order) => order.size === filterSize);
@@ -45,6 +44,7 @@ export default function OrderList() {
           </button>
         ))}
       </div>
+
     </div>
   );
 }

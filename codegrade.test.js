@@ -8,6 +8,7 @@ import { reset } from './backend/helpers'
 import { resetStore } from './frontend/state/store'
 import App from './frontend/components/App'
 
+jest.setTimeout(1500)
 const waitForOptions = { timeout: 250 }
 const queryOptions = { exact: false }
 
@@ -33,11 +34,10 @@ describe('Pizza App', () => {
     mushrooms = screen.getByTestId('checkMushrooms')
     ham = screen.getByTestId('checkHam')
     submit = screen.getByTestId('submit')
-    btn_all = await screen.findByTestId('filterBtnAll', waitForOptions)
+    btn_all = screen.getByTestId('filterBtnAll')
     btn_s = screen.getByTestId('filterBtnS')
     btn_m = screen.getByTestId('filterBtnM')
     btn_l = screen.getByTestId('filterBtnL')
-    
 
     await waitFor(() => screen.getByText('Sigourney Weaver ordered', queryOptions), waitForOptions)
     expect(screen.getAllByText('ordered a size', queryOptions)).toHaveLength(1)
@@ -46,7 +46,6 @@ describe('Pizza App', () => {
     // this checks only the assertions inside the beforeEach above
   })
   test('[2] Correct history item renders on order with no toppings', async () => {
-   
     await user.type(fullName, 'Meryl Streep')
     await user.selectOptions(size, 'Large')
     await user.click(submit)
