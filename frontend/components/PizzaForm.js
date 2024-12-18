@@ -34,7 +34,7 @@ const reducer = (state, action) => {
 export default function PizzaForm() {
   const [state, dispatch] = useReducer(reducer, initialFormState);
   const [error, setError] = useState('');
-  const [createOrder, { isLoading: creatingOrder }] = useCreateOrderMutation();
+  const [createOrder, { isLoading: creatingOrder, error: orderError }] = useCreateOrderMutation();
 
   const onChange = ({ target: { name, value } }) => {
     dispatch({ type: CHANGE_INPUT, payload: { name, value } });
@@ -69,7 +69,8 @@ export default function PizzaForm() {
         resetForm();
       })
       .catch((err) => {
-        setError('Order failed: ' + err.message);
+        console.log('Create order error', err, orderError)
+        setError('Order failed: ' + err.data.message);
       });
   };
 
